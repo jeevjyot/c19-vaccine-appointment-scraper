@@ -30,10 +30,11 @@ public class Watcher {
     //TODO: Send the link with the text message
     public static void sendText(String status) {
         // Find your Account Sid and Auth Token at twilio.com/console
+        // Create account from here  www.twilio.com/referral/QMkbwm
         String ACCOUNT_SID =
-                "AC2c14ea8ba27424439ddd4be8fa494d7b";
+                "PASTE YOUR ACCOUNT_SID";
         String AUTH_TOKEN =
-                "PASTE YOUR AUTH_TOKEN (create account here www.twilio.com/referral/QMkbwm)";
+                "PASTE YOUR AUTH_TOKEN ";
 
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
