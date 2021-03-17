@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'org.jsoup:jsoup:1.13.1'
+    implementation group: 'javax.mail', name: 'mail', version: '1.4.1'
+    implementation group: "com.twilio.sdk", name: "twilio", version: "8.8.0"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+mainClassName='appointment.watcher.Watcher'
