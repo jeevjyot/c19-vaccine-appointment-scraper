@@ -1,4 +1,4 @@
-# Appointment-watcher
+# C19-Vaccine-Appointment-Watcher
 
 This console app just run scrapes the HTML from the appointment website
 and tries to find the available slot.
