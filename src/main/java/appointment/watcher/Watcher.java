@@ -1,5 +1,7 @@
 package appointment.watcher;
 
+import appointment.watcher.exception.CustomException;
+import appointment.watcher.exception.ExceptionType;
 import appointment.watcher.service.WatcherService;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
@@ -25,10 +27,15 @@ public class Watcher {
                 //TODO: send text only when appointment is available
                 available = watcherService.checkIfAppointmentAvailable();
                 sendText("Appointment available = " + available);
-            } catch (Exception e) {
-                log.error("Error occurred: {}", e.getMessage());
-                sendText("Something went wrong=" + e.getMessage());
+            } catch (CustomException e) {
+                if (ExceptionType.SKIPPABLE.equals(e.getExceptionType())) {
+                    log.info(e.getMessage());
+                } else {
+                    log.error("Error occurred: {}", e.getMessage());
+                    sendText("Something went wrong=" + e.getMessage());
+                }
             }
+
             Thread.sleep(10000); //feel free to change the frequency
         }
     }
