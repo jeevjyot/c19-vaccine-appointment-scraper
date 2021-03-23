@@ -26,7 +26,7 @@ public class AppointmentClient {
 
     public String getAppointmentResponse() throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(Constants.REG_URL))
+                .uri(new URI(Constants.REGISTRATION_URL))
                 .version(HttpClient.Version.HTTP_2)
                 .timeout(Duration.of(3, SECONDS))
                 .GET()

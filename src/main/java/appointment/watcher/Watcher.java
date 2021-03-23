@@ -25,7 +25,7 @@ public class Watcher {
                 available = watcherService.checkIfAppointmentAvailable();
 
                 if (available) {
-                    sendText("Appointment available!! See: " + Constants.REG_URL);
+                    sendText("Appointment available!! See: " + Constants.REGISTRATION_URL);
                 }
 
             } catch (AppointmentNotFoundException e) {
