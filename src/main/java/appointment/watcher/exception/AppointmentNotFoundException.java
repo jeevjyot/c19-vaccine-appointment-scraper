@@ -5,9 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class CustomException extends Exception {
+public class AppointmentNotFoundException extends Exception {
 
-    ExceptionType exceptionType;
-    String message;
-
+    private String message;
 }

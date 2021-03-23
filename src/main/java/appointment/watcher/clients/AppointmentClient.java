@@ -1,7 +1,6 @@
 package appointment.watcher.clients;
 
-import appointment.watcher.exception.CustomException;
-import appointment.watcher.exception.ExceptionType;
+import appointment.watcher.exception.AppointmentNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.ProxySelector;
@@ -37,11 +36,11 @@ public class AppointmentClient {
         if (response.statusCode() == 302 &&
                 response.headers().map().get("location").get(0).contains("Clinic+does+not+have+any+appointment+slots+available.")) {
 
-            throw new CustomException(ExceptionType.SKIPPABLE, "No appointments.");
+            throw new AppointmentNotFoundException("No appointments.");
         } else if (response.statusCode() != 200) {
 
             log.warn("Non successful response. Status_code={} Body={}", response.statusCode(), response.body());
-            throw new CustomException(ExceptionType.FATAL, "Failed to get the response " + response.statusCode());
+            throw new Exception("Failed to get the response " + response.statusCode());
         }
 
         return response.body();

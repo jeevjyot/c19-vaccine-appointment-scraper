@@ -1,7 +1,6 @@
 package appointment.watcher;
 
-import appointment.watcher.exception.CustomException;
-import appointment.watcher.exception.ExceptionType;
+import appointment.watcher.exception.AppointmentNotFoundException;
 import appointment.watcher.service.WatcherService;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
@@ -20,27 +19,26 @@ public class Watcher {
         log.info("Watching appointments");
         WatcherService watcherService = new WatcherService();
 
-        //TODO: remove infinite loop and introduce scheduler or cron job
         while (true) {
             boolean available;
             try {
-                //TODO: send text only when appointment is available
                 available = watcherService.checkIfAppointmentAvailable();
-                sendText("Appointment available = " + available);
-            } catch (CustomException e) {
-                if (ExceptionType.SKIPPABLE.equals(e.getExceptionType())) {
-                    log.info(e.getMessage());
-                } else {
-                    log.error("Error occurred: {}", e.getMessage());
-                    sendText("Something went wrong=" + e.getMessage());
+
+                if (available) {
+                    sendText("Appointment available!!");
                 }
+
+            } catch (AppointmentNotFoundException e) {
+                log.info(e.getMessage());
+            } catch (Exception e) {
+                log.error("Error occurred: {}", e.getMessage());
+                sendText("Something went wrong=" + e.getMessage());
             }
 
-            Thread.sleep(10000); //feel free to change the frequency
+            Thread.sleep(10_000); //feel free to change the frequency
         }
     }
 
-    //TODO: Send the link with the text message
     public static void sendText(String status) {
         // Find your Account Sid and Auth Token at twilio.com/console
         // Create account from here  www.twilio.com/referral/QMkbwm
