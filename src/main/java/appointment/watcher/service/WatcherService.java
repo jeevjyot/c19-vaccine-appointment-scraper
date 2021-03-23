@@ -22,7 +22,6 @@ public class WatcherService {
     public boolean checkIfAppointmentAvailable() throws Exception {
         List<String> availability = getAvailability();
         return availability.stream()
-                .peek(System.out::println)
                 .anyMatch(s -> !s.equals("No appointments available"));
     }
 

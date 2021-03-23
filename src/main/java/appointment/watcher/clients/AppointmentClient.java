@@ -1,5 +1,6 @@
 package appointment.watcher.clients;
 
+import appointment.watcher.Constants;
 import appointment.watcher.exception.AppointmentNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +26,7 @@ public class AppointmentClient {
 
     public String getAppointmentResponse() throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("https://www.calvax.org/reg/3092726101"))
+                .uri(new URI(Constants.REG_URL))
                 .version(HttpClient.Version.HTTP_2)
                 .timeout(Duration.of(3, SECONDS))
                 .GET()
