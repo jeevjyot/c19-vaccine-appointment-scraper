@@ -35,7 +35,8 @@ public class WatcherService {
                 .getElementById("appointments-section");
         Elements appointmentsTable = appointmentSection.getElementsByClass("table mb-6");
         Elements tableRows = appointmentsTable.select("tr");
-        List<String> appointmentAvailability = new ArrayList();
+        List<String> appointmentAvailability = new ArrayList<>();
+
         for (Element element : tableRows) {
             Elements tableData = element.select("td");
             //traversing all the table rows

@@ -1,5 +1,8 @@
 package appointment.watcher.clients;
 
+import appointment.watcher.exception.AppointmentNotFoundException;
+import lombok.extern.slf4j.Slf4j;
+
 import java.net.ProxySelector;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -9,6 +12,7 @@ import java.time.Duration;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 
+@Slf4j
 public class AppointmentClient {
 
     private final HttpClient httpClient;
@@ -29,12 +33,16 @@ public class AppointmentClient {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        if (response.statusCode() != 200) {
-            System.out.println("non successful response");
-            System.out.println("StatusCode =" + response.statusCode());
-            System.out.println("ResponseBody=" + response.body());
+        if (response.statusCode() == 302 &&
+                response.headers().map().get("location").get(0).contains("Clinic+does+not+have+any+appointment+slots+available.")) {
+
+            throw new AppointmentNotFoundException("No appointments.");
+        } else if (response.statusCode() != 200) {
+
+            log.warn("Non successful response. Status_code={} Body={}", response.statusCode(), response.body());
             throw new Exception("Failed to get the response " + response.statusCode());
         }
+
         return response.body();
     }
 }
